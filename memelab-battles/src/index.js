@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import LobbyScreenPlayer from "./player-screens/LobbyScreen_Player";
+import CreateMemeScreen from "./player-screens/CreateMeme_Player";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <LobbyScreenPlayer />
+    <CreateMemeScreen />
   </React.StrictMode>
 );
 //<App />
