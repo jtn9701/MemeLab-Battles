@@ -1,4 +1,6 @@
+/*
 import axios from "axios";
+import { Tenor } from "react-tenor";
 
 const TENOR_URL = "https://g.tenor.com/v1/search?key=";
 
@@ -22,3 +24,4 @@ async function grab_data(search_term = "smile") {
 }
 
 export { grab_data };
+*/

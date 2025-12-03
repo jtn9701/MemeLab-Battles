@@ -1,0 +1,1 @@
+// Kiosk screen management

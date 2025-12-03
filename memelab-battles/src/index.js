@@ -3,12 +3,13 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import VotingScreen from "./player-screens/VotingScreen_Player";
+
+import PlayerScreen from "./server/PlayerScreen";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <VotingScreen />
+    <PlayerScreen />
   </React.StrictMode>
 );
 //<App />
