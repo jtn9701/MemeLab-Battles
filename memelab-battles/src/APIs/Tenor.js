@@ -1,13 +1,12 @@
-/*
 import axios from "axios";
-import { Tenor } from "react-tenor";
+//import { Tenor } from "react-tenor";
 
 const TENOR_URL = "https://g.tenor.com/v1/search?key=";
 
 // function to call the seach endpoint
 async function grab_data(search_term = "smile") {
   // set apikey and limit
-  var apikey = "AIzaSyC7pCJGBOGYrAuwWH5n6kCWrtxE_fVlL8Ms";
+  var apikey = "AIzaSyAFS0KKXXbJCjq7cGDKWaQxS7fF3a_ob68";
   var limit = "3";
 
   const response = await axios.get(TENOR_URL + apikey, {
@@ -24,4 +23,3 @@ async function grab_data(search_term = "smile") {
 }
 
 export { grab_data };
-*/

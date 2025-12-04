@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import "./Image_Container.css";
 
-function ImageContainer({ memeCaption, setCreatedMemeImage }) {
-  const [image, setImage] = useState("");
-
-  useEffect(() => {
-    let newImage =
-      "https://picsum.photos/" + Math.floor(Math.random() * 500) + "/100";
-    setImage(newImage);
-  }, []);
-
+function ImageContainer({ imageURL, setSavedMemeURL }) {
   return (
-    <div>
-      <img
-        src={image}
-        alt="Clickable Image"
-        onClick={() => {
-          setCreatedMemeImage(image);
-          console.log("Image Clicked");
-        }}
-      />
-      <h3>{memeCaption ?? ""}</h3>
+    <div className="image-item">
+      <div className="image-wrapper">
+        <img
+          className="image-item-img"
+          src={imageURL}
+          alt="Clickable Image"
+          onError={() => {
+            console.log("Image failed to load: ", imageURL);
+          }}
+          onClick={() => {
+            setSavedMemeURL(imageURL);
+          }}
+        />
+      </div>
     </div>
   );
 }
 
 export default ImageContainer;
-//gifURL || "https://i.imgur.com/MK3eW3As.jpg"

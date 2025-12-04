@@ -1,25 +1,24 @@
 import { useEffect, useState } from "react";
 
 import ImageContainer from "./Image_Container";
-import { grab_data } from "../APIs/Tenor";
+import "./Image_Gallery.css";
 
-// TODO: possibly turn this into a "flat list"
-function ImageGallery({ setCreatedMemeImage }) {
-  //const [gifs, setGIFS] = useState([]);
-
-  //useEffect(() => {
-  //  grab_data("smile").then((gifUrls) => setGIFS(gifUrls));
-  //}, []);
-
-  //{gifs.map((gif, index) => (
-  //      <ImageContainer key={index} gifURL={gif} />
-  //    ))}
-
+function ImageGallery({ memeList, setSavedMemeURL }) {
   return (
-    <div>
-      <ImageContainer key={"img-1"} setCreatedMemeImage={setCreatedMemeImage} />
-      <ImageContainer key={"img-2"} setCreatedMemeImage={setCreatedMemeImage} />
-      <ImageContainer key={"img-3"} setCreatedMemeImage={setCreatedMemeImage} />
+    <div className="gallery-container">
+      <div className="gallery-scroll">
+        {memeList.length > 0 ? (
+          memeList.map((meme, index) => (
+            <ImageContainer
+              key={index}
+              imageURL={meme.url}
+              setSavedMemeURL={setSavedMemeURL}
+            />
+          ))
+        ) : (
+          <p>No memes availabe</p>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,31 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import ImageGallery from "../Components/Image_Gallery";
 import ImageContainer from "../Components/Image_Container";
 
-function CreateMemeScreen({ setCurrentScreen }) {
-  const [inputText, setInputText] = useState("");
-  const [createdMemeImage, setCreatedMemeImage] = useState("");
+import { get_imgflip_meme } from "../APIs/ImgflipAPI";
+
+function CreateMemeScreen({ savedMemeURL, setSavedMemeURL }) {
+  const [memeList, setMemeList] = useState([]);
 
   function submitCreatedMeme() {
-    if (inputText && createdMemeImage)
-      return <ImageContainer memeCaption={inputText} />;
+    if (savedMemeURL)
+      return (
+        <ImageContainer
+          imageURL={savedMemeURL}
+          setSavedMemeURL={setSavedMemeURL}
+        />
+      );
   }
+
+  useEffect(() => {
+    async function findMemes() {
+      const memes = await get_imgflip_meme();
+      setMemeList(memes);
+    }
+
+    findMemes();
+  }, []);
 
   return (
     <div>
-      <h1>Create Meme</h1>
-      <ImageGallery setCreatedMemeImage={setCreatedMemeImage} />
-      <input
-        type="text"
-        value={inputText}
-        onChange={(event) => {
-          setInputText(event.target.value);
-        }}
-        placeholder="Type a caption..."
-      />
-      <button>Submit Meme</button>
-      {submitCreatedMeme()}
+      <h1>Choose The Best Meme Template</h1>
+      {memeList.length > 0 ? (
+        <>
+          <ImageGallery memeList={memeList} setSavedMemeURL={setSavedMemeURL} />
+          <h3>Click a meme and Submit</h3>
+          <button>Submit Meme</button>
+          {submitCreatedMeme()}
+        </>
+      ) : (
+        <p>Loading memes...</p>
+      )}
     </div>
   );
 }
