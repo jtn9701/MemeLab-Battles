@@ -7,6 +7,15 @@ import { get_imgflip_meme } from "../APIs/ImgflipAPI";
 
 function CreateMemeScreen({ savedMemeURL, setSavedMemeURL }) {
   const [memeList, setMemeList] = useState([]);
+  const [prompt, setPrompt] = useState("");
+  const promptList = [
+    "CSCI",
+    "UNO",
+    "",
+    "AI",
+    "Game Dev",
+    "Sofware Engineering",
+  ];
 
   function submitCreatedMeme() {
     if (savedMemeURL)
@@ -24,12 +33,20 @@ function CreateMemeScreen({ savedMemeURL, setSavedMemeURL }) {
       setMemeList(memes);
     }
 
+    function chooseRandPrompt() {
+      const randomIndex = Math.floor(Math.random() * promptList.length);
+      const newPrompt = promptList[randomIndex];
+      console.log("CreateMemeScreen: chosen prompt ->", newPrompt);
+      setPrompt(newPrompt);
+    }
+
+    chooseRandPrompt();
     findMemes();
   }, []);
 
   return (
     <div>
-      <h1>Choose The Best Meme Template</h1>
+      <h1>Create a {prompt} meme</h1>
       {memeList.length > 0 ? (
         <>
           <ImageGallery memeList={memeList} setSavedMemeURL={setSavedMemeURL} />
