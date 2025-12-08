@@ -9,19 +9,13 @@ function PlayerScreen() {
   // 0 = LobbyScreen
   // 1 = CreateMemeScreen
   // 2 = VotingScreen
-  // Screen navigation
-  const [currentScreen, setCurrentScreen] = useState(2);
+  const [currentScreen, setCurrentScreen] = useState(0);
 
-  // This player's created meme
-  const [savedMemeURL, setSavedMemeURL] = useState("");
-
-  // Meme with text
-  // const [savedMemesList, setSavedMemesList] = useState([
+  // Test data
   //  {
   //    url: "https://i.imgflip.com/1bij.jpg",
   //    textBoxes: [{ id: 1, text: "Top text", position: "top" }]
   //  }
-  // ]);
   const [savedWithText, setMemeWithText] = useState({
     url: "",
     textBoxes: [], // Array of {id, text, position}
@@ -48,8 +42,6 @@ function PlayerScreen() {
       return (
         <CreateMemeScreen
           setCurrentScreen={setCurrentScreen}
-          savedMemeURL={savedMemeURL}
-          setSavedMemeURL={setSavedMemeURL}
           savedWithText={savedWithText}
           setMemeWithText={setMemeWithText}
         />
