@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import PlayerScreen from "./server/PlayerScreen";
+import KioskScreen from "./server/KioskScreen";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
