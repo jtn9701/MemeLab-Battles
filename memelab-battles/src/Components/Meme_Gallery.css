@@ -1,0 +1,45 @@
+.gallery-container {
+  width: 100%;
+  height: 50vh;
+  overflow: hidden;
+}
+
+.gallery-scroll {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 16px;
+  padding-bottom: 24px; /* Extra space for scrollbar */
+  scroll-behavior: smooth;
+}
+
+/* Large, visible scrollbar styling */
+.gallery-scroll::-webkit-scrollbar {
+  height: 40px; /* Scrollbar height */
+}
+
+.gallery-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.gallery-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+  border: 4px solid #f1f1f1;
+}
+
+.gallery-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Firefox scrollbar styling */
+.gallery-scroll {
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thick;
+}
+
+

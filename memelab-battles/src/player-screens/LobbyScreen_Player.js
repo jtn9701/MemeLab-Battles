@@ -1,5 +1,3 @@
-// TODO: Take player number in as a prop from the server
-// Only show the button for the host (player 1)
 function LobbyScreenPlayer({ setCurrentScreen }) {
   return (
     <div>

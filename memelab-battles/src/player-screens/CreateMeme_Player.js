@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import ImageGallery from "../Components/Image_Gallery";
-import ImageContainer from "../Components/Image_Container";
 import MemeContainer from "../Components/Meme_Container";
 
 import { get_imgflip_meme } from "../APIs/ImgflipAPI";
@@ -43,6 +42,7 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
   }
 
   function submitCreatedMeme() {
+    console.log(savedWithText);
     if (savedWithText.url) return <MemeContainer meme={savedWithText} />;
   }
 
@@ -102,7 +102,14 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
           <button onClick={clearTextboxes} style={{ marginLeft: 8 }}>
             Clear Textboxes
           </button>
-          <button>Submit Meme</button>
+          <button
+            onClick={() => {
+              console.log(savedWithText);
+              setMemeWithText(savedWithText);
+            }}
+          >
+            Submit Meme
+          </button>
           {submitCreatedMeme()}
         </>
       ) : (
