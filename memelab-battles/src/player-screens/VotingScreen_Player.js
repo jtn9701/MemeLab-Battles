@@ -1,25 +1,20 @@
-import ImageGallery from "../Components/Image_Gallery";
-import ImageContainer from "../Components/Image_Container";
+import MemeGallery from "../Components/Meme_Gallery";
+import MemeContainer from "../Components/Meme_Container";
 
-function VotingScreen({ memeList, savedMemeURL, setSavedMemeURL }) {
+function VotingScreen({ memeList, savedWithText, setMemeWithText }) {
   function submitVotedMeme() {
-    if (savedMemeURL)
-      return (
-        <ImageContainer
-          imageURL={savedMemeURL}
-          setSavedMemeURL={setSavedMemeURL}
-        />
-      );
+    if (savedWithText.url && savedWithText.textBoxes)
+      return <MemeContainer meme={savedWithText} />;
   }
+
+  const handleMemeClick = (meme) => {
+    setMemeWithText(meme);
+  };
 
   return (
     <div>
       <h1>Vote for a Meme</h1>
-      <ImageGallery
-        memeList={memeList}
-        savedMemeURL={setSavedMemeURL}
-        setSavedMemeURL={setSavedMemeURL}
-      />
+      <MemeGallery memeList={memeList} onClick={handleMemeClick} />
       <h2>Your Vote</h2>
       {submitVotedMeme()}
     </div>

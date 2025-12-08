@@ -43,6 +43,7 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
   }
 
   function submitCreatedMeme() {
+    console.log(savedWithText);
     if (savedWithText.url) return <MemeContainer meme={savedWithText} />;
   }
 
