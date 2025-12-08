@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-
 import ImageContainer from "./Image_Container";
 import "./Image_Gallery.css";
 
-function ImageGallery({ memeList, setSavedMemeURL }) {
+function ImageGallery({ memeList, savedWithText, setMemeWithText }) {
   return (
     <div className="gallery-container">
       <div className="gallery-scroll">
@@ -12,7 +10,8 @@ function ImageGallery({ memeList, setSavedMemeURL }) {
             <ImageContainer
               key={index}
               imageURL={meme.url}
-              setSavedMemeURL={setSavedMemeURL}
+              savedWithText={savedWithText}
+              setMemeWithText={setMemeWithText}
             />
           ))
         ) : (
