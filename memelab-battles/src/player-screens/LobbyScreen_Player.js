@@ -3,7 +3,7 @@
 function LobbyScreenPlayer({ setCurrentScreen }) {
   return (
     <div>
-      <h1>Player 1</h1>
+      <h1>Wait for Players/Start Game</h1>
       <button
         onClick={() => {
           setCurrentScreen(1);

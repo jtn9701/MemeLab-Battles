@@ -1,7 +1,7 @@
 import React from "react";
 import "./Image_Container.css";
 
-function ImageContainer({ imageURL, setSavedMemeURL }) {
+function ImageContainer({ imageURL, savedWithText, setMemeWithText }) {
   return (
     <div className="image-item">
       <div className="image-wrapper">
@@ -13,7 +13,7 @@ function ImageContainer({ imageURL, setSavedMemeURL }) {
             console.log("Image failed to load: ", imageURL);
           }}
           onClick={() => {
-            setSavedMemeURL(imageURL);
+            setMemeWithText({ ...savedWithText, url: imageURL });
           }}
         />
       </div>
