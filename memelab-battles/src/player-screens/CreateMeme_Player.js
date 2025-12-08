@@ -37,6 +37,11 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
     setNewText("");
   }
 
+  function clearTextboxes() {
+    setMemeWithText({ ...(savedWithText || {}), textBoxes: [] });
+    setNewText("");
+  }
+
   function submitCreatedMeme() {
     if (savedWithText.url) return <MemeContainer meme={savedWithText} />;
   }
@@ -94,6 +99,9 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
             </label>
           </div>
           <button onClick={addTextbox}>Add Textbox</button>
+          <button onClick={clearTextboxes} style={{ marginLeft: 8 }}>
+            Clear Textboxes
+          </button>
           <button>Submit Meme</button>
           {submitCreatedMeme()}
         </>
