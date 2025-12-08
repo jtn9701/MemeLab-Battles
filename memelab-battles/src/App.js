@@ -1,27 +1,59 @@
 import { useState } from "react";
-
-import logo from "./logo.svg";
 import "./App.css";
+import PlayerScreen from "./server/PlayerScreen";
+import KioskScreen from "./server/KioskScreen";
 
 function App() {
+  const [view, setView] = useState("player"); // "player" or "kiosk"
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      {/* Dev toggle for switching views */}
+      <div style={styles.devToggle}>
+        <button
+          onClick={() => setView("player")}
+          style={{
+            ...styles.button,
+            backgroundColor: view === "player" ? "#06b6d4" : "#333",
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Player View
+        </button>
+        <button
+          onClick={() => setView("kiosk")}
+          style={{
+            ...styles.button,
+            backgroundColor: view === "kiosk" ? "#06b6d4" : "#333",
+          }}
+        >
+          Kiosk View
+        </button>
+      </div>
+
+      {/* Render selected view */}
+      {view === "player" ? <PlayerScreen /> : <KioskScreen />}
     </div>
   );
 }
+
+const styles = {
+  devToggle: {
+    position: "fixed",
+    top: "10px",
+    right: "10px",
+    zIndex: 9999,
+    display: "flex",
+    gap: "10px",
+  },
+  button: {
+    padding: "8px 12px",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    color: "#fff",
+    fontSize: "12px",
+    fontWeight: "bold",
+  },
+};
 
 export default App;

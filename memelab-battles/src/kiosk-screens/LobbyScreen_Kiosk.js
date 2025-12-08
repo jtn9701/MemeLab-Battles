@@ -5,7 +5,7 @@ export default function LobbyScreenKiosk({ lobbyName, players }) {
   return (
     <div style={styles.container}>
       
-      {/* Left: Players List */}
+      
       <div style={styles.playersPanel}>
         <h2 style={styles.sectionTitle}>Players</h2>
         <ul style={styles.playerList}>
@@ -19,13 +19,13 @@ export default function LobbyScreenKiosk({ lobbyName, players }) {
         </ul>
       </div>
 
-      {/* Middle: Lobby Title */}
+      
       <div style={styles.centerPanel}>
         <h1 style={styles.lobbyTitle}>{lobbyName}</h1>
-        <p style={styles.subText}>Waiting for everyone to join...</p>
+        <p style={styles.subText}>MEME-LAB BATTLES</p>
       </div>
 
-      {/* Right: QR Code Placeholder */}
+      
       <div style={styles.qrPanel}>
         <h2 style={styles.sectionTitle}>Join Game</h2>
         <div style={styles.qrPlaceholder}>
@@ -88,11 +88,15 @@ const styles = {
   lobbyTitle: {
     fontSize: "48px",
     marginBottom: "20px",
+    color: "#027395ec",
+    fontWeight: "bold",
   },
 
   subText: {
-    fontSize: "20px",
-    opacity: 0.7,
+    fontSize: "48px",
+    marginBottom: "20px",
+    color: "#ff0505ec",
+    fontWeight: "bold",
   },
 
   qrPanel: {
@@ -115,42 +119,3 @@ const styles = {
     opacity: 0.5,
   }
 };
-
-
-/*import { io } from "socket.io-client";
-
-const socket = io("http://localhost:3000");
-
-const playerList = document.getElementById("playerList");
-const lobbyCode = document.getElementById("lobbyCode");
-const statusMessage = document.getElementById("statusMessage");
-
-// Lobby Code display
-socket.on("lobbyCode", (data) => {
-    lobbyCode.textContent = data.lobbyCode;
-});
-
-// Player list update
-socket.on("playerListUpdate", (players) => {
-    playerList.innerHTML = ""; // Clear existing list
-    players.forEach((player) => {
-        const li = document.createElement("li");
-        li.textContent = player.name;
-        playerList.appendChild(li);
-    });
-});
-
-// Player joined
-socket.on("playerJoined", (player) => {
-    addPlayerToUI(player);
-});
-
-//Player leaves
-socket.on("playerLeft", (playerId) => {
-    removePlayerFromUI(playerId);
-});
-
-// Game starts
-socket.on("gameStarted", () => {
-    statusMessage.textContent = "Game is starting!";
-});*/
