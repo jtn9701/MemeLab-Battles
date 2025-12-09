@@ -33,7 +33,11 @@ export default function CreatingMemeScreen_Kiosk({ setCurrentKiosk }) {
     <div style={styles.container}>
       <h2 style={styles.promptText}>{prompt}</h2>
       <div id="memeCanvas" style={styles.canvas}>
-        {memeURL && <img src={memeURL} alt="meme" style={styles.memeImage} />}
+        <img
+          src={memeURL ? memeURL : "/memeplace.png"}
+          alt="meme"
+          style={styles.memeImage}
+        />
       </div>
       <div id="timerDisplay" style={styles.timer}>Time left: {timeLeft}s</div>
     </div>
@@ -57,7 +61,7 @@ const styles = {
   },
   canvas: {
     width: '600px',
-    height: '400px',
+    height: '300px',
     border: '2px solid #fff',
     display: 'flex',
     alignItems: 'center',

@@ -118,8 +118,8 @@ const styles = {
   },
 
   lobbyTitle: {
-    fontSize: "48px",
-    marginBottom: "20px",
+    fontSize: "24px",
+    marginBottom: "10px",
     color: "#027395ec",
     fontWeight: "bold",
   },
