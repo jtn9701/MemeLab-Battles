@@ -8,29 +8,29 @@ export default function LobbyScreenKiosk({ lobbyName, players }) {
       
       <div style={styles.playersPanel}>
         <h2 style={styles.sectionTitle}>Players</h2>
-        <ul style={styles.playerList}>
+        <div style={styles.playerList}>
           {players && players.length > 0 ? (
             players.map((p, index) => (
-              <li key={index} style={styles.playerItem}>{p}</li>
+              <div key={index} style={styles.playerItem}>{p}</div>
             ))
           ) : (
-            <p style={styles.placeholderText}>Waiting for players...</p>
+            <div style={styles.placeholderText}>Waiting for players...</div>
           )}
-        </ul>
+        </div>
       </div>
 
       
       <div style={styles.centerPanel}>
         <h1 style={styles.lobbyTitle}>{lobbyName}</h1>
-        <p style={styles.subText}>MEME-LAB BATTLES</p>
+        <div style={styles.subText}>MEME-LAB BATTLES</div>
       </div>
 
       
       <div style={styles.qrPanel}>
         <h2 style={styles.sectionTitle}>Join Game</h2>
         <div style={styles.qrPlaceholder}>
-          <p>QR Code</p>
-          <p style={{ fontSize: "12px", opacity: 0.6 }}>(placeholder)</p>
+          <div>QR Code</div>
+          <div style={{ fontSize: "12px", opacity: 0.6 }}>(placeholder)</div>
         </div>
       </div>
     </div>

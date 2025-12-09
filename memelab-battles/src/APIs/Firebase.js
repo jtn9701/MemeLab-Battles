@@ -1,9 +1,9 @@
 import axios from 'axios';
 const FIREBASE_BASE_URL = 'https://memelab-battles-default-rtdb.firebaseio.com/';
 
-export async function storeUser(storeUserData) {
+export async function storeUser(userData) {
     try{
-        // Store photo under its own id so we can delete by id later
+        // Store user under its own id so we can delete by id later
         if (!userData || !userData.id) {
             console.warn('storeUser: userData missing id, using POST fallback');
             await axios.post(FIREBASE_BASE_URL + "/users.json", userData);
@@ -72,5 +72,37 @@ export async function getMemes(){
         });
     } catch (error) {
         console.error("Error fetching memes:", error);
+    }
+}
+
+export async function storeGameSession(sessionData) {
+    try {
+        // Store game session under its own id
+        if (!sessionData || !sessionData.id) {
+            console.warn('storeGameSession: sessionData missing id, using POST fallback');
+            await axios.post(FIREBASE_BASE_URL + "/gameSessions.json", sessionData);
+            return;
+        }
+        await axios.put(FIREBASE_BASE_URL + `/gameSessions/${sessionData.id}.json`, sessionData);
+    } catch (error) {
+        console.error("Error storing game session:", error);
+    }
+}
+
+export async function getGameSessions() {
+    try {
+        const response = await axios.get(FIREBASE_BASE_URL + "/gameSessions.json");
+        const data = response.data;
+        if (!data) return [];
+        // Data will be an object where keys are ids
+        return Object.keys(data).map((key) => {
+            const item = data[key];
+            return {
+                id: item.id ? String(item.id) : String(key),
+                ...item,
+            };
+        });
+    } catch (error) {
+        console.error("Error fetching game sessions:", error);
     }
 }
