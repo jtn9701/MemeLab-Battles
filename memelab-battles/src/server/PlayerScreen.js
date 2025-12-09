@@ -10,16 +10,27 @@ function PlayerScreen() {
   // 1 = CreateMemeScreen
   // 2 = VotingScreen
   const [currentScreen, setCurrentScreen] = useState(0);
+  const [username, setUsername] = useState("");
 
   // Test data
   //  {
+  //    username: "User",
   //    url: "https://i.imgflip.com/1bij.jpg",
   //    textBoxes: [{ id: 1, text: "Top text", position: "top" }]
   //  }
   const [savedWithText, setMemeWithText] = useState({
+    username: "",
     url: "",
     textBoxes: [], // Array of {id, text, position}
   });
+
+  // Wrapper function to ensure username is always preserved in meme metadata
+  const updateMemeWithText = (memeData) => {
+    setMemeWithText({
+      ...memeData,
+      username: memeData.username || username || "Anonymous",
+    });
+  };
 
   // Shape of list: [{"url": "testURL1"}, {"url": "testURL2"}, ...]
   // Dummy data: {"url": "https://i.imgflip.com/1bij.jpg"}
@@ -37,13 +48,20 @@ function PlayerScreen() {
 
   switch (currentScreen) {
     case 0:
-      return <LobbyScreenPlayer setCurrentScreen={setCurrentScreen} />;
+      return (
+        <LobbyScreenPlayer
+          setCurrentScreen={setCurrentScreen}
+          username={username}
+          setUsername={setUsername}
+          setMemeWithText={updateMemeWithText}
+        />
+      );
     case 1:
       return (
         <CreateMemeScreen
           setCurrentScreen={setCurrentScreen}
           savedWithText={savedWithText}
-          setMemeWithText={setMemeWithText}
+          setMemeWithText={updateMemeWithText}
         />
       );
     case 2:
@@ -51,7 +69,7 @@ function PlayerScreen() {
         <VotingScreen
           memeList={savedMemesList}
           savedWithText={savedWithText}
-          setMemeWithText={setMemeWithText}
+          setMemeWithText={updateMemeWithText}
         />
       );
     default:
