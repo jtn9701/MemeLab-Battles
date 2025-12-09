@@ -1,7 +1,42 @@
+import { useEffect, useRef } from "react";
 import { io } from "socket.io-client";
+import QRCode from "qrcode";
 const socket = io("http://localhost:3000");
 
-export default function LobbyScreenKiosk({ lobbyName, players }) {
+export default function LobbyScreenKiosk({ lobbyName, players, setCurrentKiosk }) {
+  const qrCanvasRef = useRef(null);
+
+  useEffect(() => {
+    // Generate QR code with room/lobby URL
+    const generateQRCode = async () => {
+      if (qrCanvasRef.current) {
+        try {
+          // Create a URL that players can use to join
+          const joinUrl = `${window.location.origin}/controller?room=${lobbyName}`;
+          await QRCode.toCanvas(qrCanvasRef.current, joinUrl, {
+            width: 250,
+            margin: 1,
+            color: {
+              dark: '#000',
+              light: '#fff'
+            }
+          });
+        } catch (err) {
+          console.error('Failed to generate QR code:', err);
+        }
+      }
+    };
+
+    generateQRCode();
+
+    socket.on("gameStarted", () => {
+      if (setCurrentKiosk) setCurrentKiosk(1);
+    });
+    return () => {
+      socket.off("gameStarted");
+    };
+  }, [lobbyName, setCurrentKiosk]);
+
   return (
     <div style={styles.container}>
       
@@ -28,10 +63,7 @@ export default function LobbyScreenKiosk({ lobbyName, players }) {
       
       <div style={styles.qrPanel}>
         <h2 style={styles.sectionTitle}>Join Game</h2>
-        <div style={styles.qrPlaceholder}>
-          <div>QR Code</div>
-          <div style={{ fontSize: "12px", opacity: 0.6 }}>(placeholder)</div>
-        </div>
+        <canvas ref={qrCanvasRef} style={styles.qrCanvas}></canvas>
       </div>
     </div>
   );
@@ -106,16 +138,11 @@ const styles = {
     textAlign: "center",
   },
 
-  qrPlaceholder: {
+  qrCanvas: {
     marginTop: "20px",
-    height: "250px",
-    width: "250px",
     border: "3px solid #fff",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
     borderRadius: "10px",
-    opacity: 0.5,
+    backgroundColor: "#fff",
+    padding: "10px",
   }
 };

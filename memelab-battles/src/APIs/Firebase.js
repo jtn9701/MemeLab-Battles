@@ -45,7 +45,7 @@ export async function deleteUser(userId){
 
 export async function storeMeme(memeData) {
     try{
-        // Store photo under its own id so we can delete by id later
+        // Store meme under its own id so we can delete by id later
         if (!memeData || !memeData.id) {
             console.warn('storeMeme: memeData missing id, using POST fallback');
             await axios.post(FIREBASE_BASE_URL + "/memes.json", memeData);
