@@ -1,7 +1,8 @@
 import MemeGallery from "../Components/Meme_Gallery";
 import MemeContainer from "../Components/Meme_Container";
+import socket from "../lib/socket";
 
-function VotingScreen({ memeList, savedWithText, setMemeWithText }) {
+function VotingScreen({ memeList, savedWithText, setMemeWithText, socket: injectedSocket }) {
   function submitVotedMeme() {
     if (savedWithText.url && savedWithText.textBoxes)
       return <MemeContainer meme={savedWithText} />;
@@ -9,6 +10,7 @@ function VotingScreen({ memeList, savedWithText, setMemeWithText }) {
 
   const handleMemeClick = (meme) => {
     setMemeWithText(meme);
+    (injectedSocket || socket).emit("voteCast", meme);
   };
 
   return (

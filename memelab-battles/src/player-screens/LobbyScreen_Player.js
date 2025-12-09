@@ -1,4 +1,5 @@
 function LobbyScreenPlayer({
+  socket,
   setCurrentScreen,
   username,
   setUsername,
@@ -22,6 +23,8 @@ function LobbyScreenPlayer({
     });
 
     console.log("Player name:", finalName);
+    socket.emit("joinLobby", { username: finalName });
+    socket.emit("startCreation", {});
     setCurrentScreen(1);
   };
 

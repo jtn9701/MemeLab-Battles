@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import socket from "../lib/socket";
 
 import ImageGallery from "../Components/Image_Gallery";
 import MemeContainer from "../Components/Meme_Container";
 
 import { get_imgflip_meme } from "../APIs/ImgflipAPI";
 
-function CreateMemeScreen({ savedWithText, setMemeWithText }) {
+function CreateMemeScreen({ savedWithText, setMemeWithText, socket: injectedSocket }) {
   const [memeList, setMemeList] = useState([]);
   const [prompt, setPrompt] = useState("");
   const [newText, setNewText] = useState("");
@@ -42,8 +43,10 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
   }
 
   function submitCreatedMeme() {
-    console.log(savedWithText);
-    if (savedWithText.url) return <MemeContainer meme={savedWithText} />;
+    const client = injectedSocket || socket;
+    if (!savedWithText.url) return null;
+    client.emit("memeCreated", savedWithText);
+    return <MemeContainer meme={savedWithText} />;
   }
 
   useEffect(() => {
@@ -62,6 +65,17 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
     chooseRandPrompt();
     findMemes();
   }, []);
+
+  useEffect(() => {
+    const client = injectedSocket || socket;
+    const handleStart = (data) => {
+      if (data?.prompt) setPrompt(data.prompt);
+    };
+    client.on("memeCreationStarted", handleStart);
+    return () => {
+      client.off("memeCreationStarted", handleStart);
+    };
+  }, [injectedSocket]);
 
   return (
     <div>
@@ -102,14 +116,7 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
           <button onClick={clearTextboxes} style={{ marginLeft: 8 }}>
             Clear Textboxes
           </button>
-          <button
-            onClick={() => {
-              console.log(savedWithText);
-              setMemeWithText(savedWithText);
-            }}
-          >
-            Submit Meme
-          </button>
+          <button onClick={submitCreatedMeme}>Submit Meme</button>
           {submitCreatedMeme()}
         </>
       ) : (

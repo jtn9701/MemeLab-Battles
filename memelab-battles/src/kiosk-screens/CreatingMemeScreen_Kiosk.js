@@ -1,31 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { io } from 'socket.io-client';
+import socket from '../lib/socket';
 
 export default function CreatingMemeScreen_Kiosk({ setCurrentKiosk }) {
   const [prompt, setPrompt] = useState('Waiting for prompt...');
   const [timeLeft, setTimeLeft] = useState(0);
   const [memeURL, setMemeURL] = useState('');
-  const socketRef = useRef(null);
+  const socketRef = useRef(socket);
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
-    socketRef.current = socket;
-
-    socket.on('memeCreationStarted', (data) => {
+    const s = socketRef.current;
+    const handleStart = (data) => {
       setPrompt(data.prompt || 'Create a meme');
       setTimeLeft(data.duration || 60);
-    });
+    };
+    const handleTimer = (value) => setTimeLeft(value);
+    const handleSaved = (url) => setMemeURL(url);
 
-    socket.on('memeCreationTimer', (timeLeft) => {
-      setTimeLeft(timeLeft);
-    });
-
-    socket.on('memeSaved', (memeURL) => {
-      setMemeURL(memeURL);
-    });
+    s.on('memeCreationStarted', handleStart);
+    s.on('memeCreationTimer', handleTimer);
+    s.on('memeSaved', handleSaved);
 
     return () => {
-      if (socket) socket.disconnect();
+      s.off('memeCreationStarted', handleStart);
+      s.off('memeCreationTimer', handleTimer);
+      s.off('memeSaved', handleSaved);
     };
   }, []);
 

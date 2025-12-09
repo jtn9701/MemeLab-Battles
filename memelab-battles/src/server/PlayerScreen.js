@@ -1,5 +1,6 @@
 // Player Screen Manager
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import socket from "../lib/socket";
 
 import CreateMemeScreen from "../player-screens/CreateMeme_Player";
 import LobbyScreenPlayer from "../player-screens/LobbyScreen_Player";
@@ -35,21 +36,36 @@ function PlayerScreen() {
   // Shape of list: [{"url": "testURL1"}, {"url": "testURL2"}, ...]
   // Dummy data: {"url": "https://i.imgflip.com/1bij.jpg"}
   // Contains all players' memes. Will be used for Voting
-  const [savedMemesList, setSavedMemesList] = useState([
-    {
-      textBoxes: [{ id: 1765169743634, text: "test", position: "top" }],
-      url: "https://i.imgflip.com/1ur9b0.jpg",
-    },
-    {
-      textBoxes: [{ id: 1765169743634, text: "test", position: "top" }],
-      url: "https://i.imgflip.com/1ur9b0.jpg",
-    },
-  ]);
+  const [savedMemesList, setSavedMemesList] = useState([]);
+
+  useEffect(() => {
+    const handleMemeCreationStarted = () => setCurrentScreen(1);
+    const handleVotingStarted = (memeList) => {
+      setSavedMemesList(memeList || []);
+      setCurrentScreen(2);
+    };
+    const handleGameReset = () => {
+      setCurrentScreen(0);
+      setSavedMemesList([]);
+      setMemeWithText({ url: "", textBoxes: [] });
+    };
+
+    socket.on("memeCreationStarted", handleMemeCreationStarted);
+    socket.on("votingStarted", handleVotingStarted);
+    socket.on("gameReset", handleGameReset);
+
+    return () => {
+      socket.off("memeCreationStarted", handleMemeCreationStarted);
+      socket.off("votingStarted", handleVotingStarted);
+      socket.off("gameReset", handleGameReset);
+    };
+  }, []);
 
   switch (currentScreen) {
     case 0:
       return (
         <LobbyScreenPlayer
+          socket={socket}
           setCurrentScreen={setCurrentScreen}
           username={username}
           setUsername={setUsername}
@@ -59,6 +75,7 @@ function PlayerScreen() {
     case 1:
       return (
         <CreateMemeScreen
+          socket={socket}
           setCurrentScreen={setCurrentScreen}
           savedWithText={savedWithText}
           setMemeWithText={updateMemeWithText}
@@ -67,6 +84,7 @@ function PlayerScreen() {
     case 2:
       return (
         <VotingScreen
+          socket={socket}
           memeList={savedMemesList}
           savedWithText={savedWithText}
           setMemeWithText={updateMemeWithText}

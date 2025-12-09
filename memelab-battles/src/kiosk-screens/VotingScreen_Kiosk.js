@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { io } from 'socket.io-client';
+import socket from '../lib/socket';
 
 export default function VotingScreen_Kiosk({ setCurrentKiosk }) {
   const [currentMemes, setCurrentMemes] = useState([]);
@@ -7,35 +7,37 @@ export default function VotingScreen_Kiosk({ setCurrentKiosk }) {
   const [timeLeft, setTimeLeft] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
   const [results, setResults] = useState(null);
-  const socketRef = useRef(null);
+  const socketRef = useRef(socket);
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
-    socketRef.current = socket;
-
-    socket.on('votingStarted', (memeList) => {
+    const s = socketRef.current;
+    const handleStart = (memeList) => {
       setCurrentMemes(memeList || []);
       setCurrentIndex(0);
-    });
+    };
+    const handleTimer = (value) => setTimeLeft(value);
+    const handleVote = (payload) => {
+      if (payload && payload.count !== undefined) {
+        setVoteCount(payload.count);
+      } else if (typeof payload === 'number') {
+        setVoteCount(payload);
+      }
+    };
+    const handleNext = () => setCurrentIndex((prev) => prev + 1);
+    const handleEnd = (payload) => setResults(payload);
 
-    socket.on('votingTimer', (timeLeft) => {
-      setTimeLeft(timeLeft);
-    });
-
-    socket.on('voteUpdate', (voteCount) => {
-      setVoteCount(voteCount);
-    });
-
-    socket.on('nextMeme', () => {
-      setCurrentIndex((prev) => prev + 1);
-    });
-
-    socket.on('votingEnded', (results) => {
-      setResults(results);
-    });
+    s.on('votingStarted', handleStart);
+    s.on('votingTimer', handleTimer);
+    s.on('voteUpdate', handleVote);
+    s.on('nextMeme', handleNext);
+    s.on('votingEnded', handleEnd);
 
     return () => {
-      if (socket) socket.disconnect();
+      s.off('votingStarted', handleStart);
+      s.off('votingTimer', handleTimer);
+      s.off('voteUpdate', handleVote);
+      s.off('nextMeme', handleNext);
+      s.off('votingEnded', handleEnd);
     };
   }, []);
 
