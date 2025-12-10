@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { io } from 'socket.io-client';
+import React, { useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
 
 export default function VotingScreen_Kiosk({ setCurrentKiosk }) {
   const [currentMemes, setCurrentMemes] = useState([]);
@@ -10,27 +10,27 @@ export default function VotingScreen_Kiosk({ setCurrentKiosk }) {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
+    const socket = io("http://localhost:3000");
     socketRef.current = socket;
 
-    socket.on('votingStarted', (memeList) => {
+    socket.on("votingStarted", (memeList) => {
       setCurrentMemes(memeList || []);
       setCurrentIndex(0);
     });
 
-    socket.on('votingTimer', (timeLeft) => {
+    socket.on("votingTimer", (timeLeft) => {
       setTimeLeft(timeLeft);
     });
 
-    socket.on('voteUpdate', (voteCount) => {
+    socket.on("voteUpdate", (voteCount) => {
       setVoteCount(voteCount);
     });
 
-    socket.on('nextMeme', () => {
+    socket.on("nextMeme", () => {
       setCurrentIndex((prev) => prev + 1);
     });
 
-    socket.on('votingEnded', (results) => {
+    socket.on("votingEnded", (results) => {
       setResults(results);
     });
 
@@ -53,16 +53,24 @@ export default function VotingScreen_Kiosk({ setCurrentKiosk }) {
   return (
     <div style={styles.container}>
       <div id="memeImage" style={styles.memeDisplay}>
-        {currentMeme.image && <img src={currentMeme.image} alt="meme" style={styles.image} />}
+        {currentMeme.image && (
+          <img src={currentMeme.image} alt="meme" style={styles.image} />
+        )}
       </div>
-      <div id="caption" style={styles.caption}>{currentMeme.caption || 'Meme'}</div>
-      <div id="timer" style={styles.timer}>Time left: {timeLeft}s</div>
-      <div id="voteCount" style={styles.voteCount}>Votes: {voteCount}</div>
-      <button 
-        onClick={() => setCurrentKiosk(0)} 
+      <div id="caption" style={styles.caption}>
+        {currentMeme.caption || "Meme"}
+      </div>
+      <div id="timer" style={styles.timer}>
+        Time left: {timeLeft}s
+      </div>
+      <div id="voteCount" style={styles.voteCount}>
+        Votes: {voteCount}
+      </div>
+      <button
+        onClick={() => setCurrentKiosk(0)}
         style={styles.navButton}
-        onMouseEnter={(e) => e.target.style.backgroundColor = "#035a73ec"}
-        onMouseLeave={(e) => e.target.style.backgroundColor = "#027395ec"}
+        onMouseEnter={(e) => (e.target.style.backgroundColor = "#035a73ec")}
+        onMouseLeave={(e) => (e.target.style.backgroundColor = "#027395ec")}
       >
         Back to Lobby
       </button>
@@ -72,52 +80,52 @@ export default function VotingScreen_Kiosk({ setCurrentKiosk }) {
 
 const styles = {
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    backgroundColor: '#121212',
-    color: '#fff',
-    padding: '20px',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
+    backgroundColor: "#121212",
+    color: "#fff",
+    padding: "20px",
   },
   memeDisplay: {
-    width: '600px',
-    height: '400px',
-    backgroundColor: '#222',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: '20px',
-    borderRadius: '8px',
+    width: "600px",
+    height: "400px",
+    backgroundColor: "#222",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: "20px",
+    borderRadius: "8px",
   },
   image: {
-    maxWidth: '100%',
-    maxHeight: '100%',
+    maxWidth: "100%",
+    maxHeight: "100%",
   },
   caption: {
-    fontSize: '24px',
-    marginBottom: '20px',
+    fontSize: "24px",
+    marginBottom: "20px",
   },
   timer: {
-    fontSize: '20px',
+    fontSize: "20px",
     opacity: 0.7,
-    marginBottom: '10px',
+    marginBottom: "10px",
   },
   voteCount: {
-    fontSize: '20px',
-    color: '#06b6d4',
+    fontSize: "20px",
+    color: "#06b6d4",
   },
   navButton: {
-    marginTop: '20px',
-    padding: '15px 40px',
-    fontSize: '18px',
-    fontWeight: 'bold',
-    backgroundColor: '#027395ec',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
+    marginTop: "20px",
+    padding: "15px 40px",
+    fontSize: "18px",
+    fontWeight: "bold",
+    backgroundColor: "#027395ec",
+    color: "#fff",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
   },
 };

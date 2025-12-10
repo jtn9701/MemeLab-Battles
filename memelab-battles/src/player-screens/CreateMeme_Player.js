@@ -5,7 +5,7 @@ import MemeContainer from "../Components/Meme_Container";
 
 import { get_imgflip_meme } from "../APIs/ImgflipAPI";
 
-function CreateMemeScreen({ savedWithText, setMemeWithText }) {
+function CreateMemeScreen({ savedWithText, setMemeWithText, setCurrentScreen }) {
   const [memeList, setMemeList] = useState([]);
   const [prompt, setPrompt] = useState("");
   const [newText, setNewText] = useState("");
@@ -106,6 +106,7 @@ function CreateMemeScreen({ savedWithText, setMemeWithText }) {
             onClick={() => {
               console.log(savedWithText);
               setMemeWithText(savedWithText);
+              setCurrentScreen(2); // Navigate to VotingScreen
             }}
           >
             Submit Meme

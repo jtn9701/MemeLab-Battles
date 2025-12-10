@@ -37,8 +37,8 @@ function PlayerScreen() {
   // Contains all players' memes. Will be used for Voting
   const [savedMemesList, setSavedMemesList] = useState([
     {
-      textBoxes: [{ id: 1765169743634, text: "test", position: "top" }],
-      url: "https://i.imgflip.com/1ur9b0.jpg",
+      textBoxes: [{ id: 1765334539988, text: "for an A", position: "bottom" }],
+      url: "https://i.imgflip.com/3oevdk.jpg",
     },
     {
       textBoxes: [{ id: 1765169743634, text: "test", position: "top" }],
@@ -70,6 +70,7 @@ function PlayerScreen() {
           memeList={savedMemesList}
           savedWithText={savedWithText}
           setMemeWithText={updateMemeWithText}
+          setCurrentScreen={setCurrentScreen}
         />
       );
     default:
