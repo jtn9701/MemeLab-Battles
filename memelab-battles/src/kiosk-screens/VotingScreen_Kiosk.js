@@ -58,6 +58,14 @@ export default function VotingScreen_Kiosk({ setCurrentKiosk }) {
       <div id="caption" style={styles.caption}>{currentMeme.caption || 'Meme'}</div>
       <div id="timer" style={styles.timer}>Time left: {timeLeft}s</div>
       <div id="voteCount" style={styles.voteCount}>Votes: {voteCount}</div>
+      <button 
+        onClick={() => setCurrentKiosk(0)} 
+        style={styles.navButton}
+        onMouseEnter={(e) => e.target.style.backgroundColor = "#035a73ec"}
+        onMouseLeave={(e) => e.target.style.backgroundColor = "#027395ec"}
+      >
+        Back to Lobby
+      </button>
     </div>
   );
 }
@@ -99,5 +107,17 @@ const styles = {
   voteCount: {
     fontSize: '20px',
     color: '#06b6d4',
+  },
+  navButton: {
+    marginTop: '20px',
+    padding: '15px 40px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    backgroundColor: '#027395ec',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
   },
 };

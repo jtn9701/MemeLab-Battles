@@ -40,6 +40,14 @@ export default function CreatingMemeScreen_Kiosk({ setCurrentKiosk }) {
         />
       </div>
       <div id="timerDisplay" style={styles.timer}>Time left: {timeLeft}s</div>
+      <button 
+        onClick={() => setCurrentKiosk(2)} 
+        style={styles.navButton}
+        onMouseEnter={(e) => e.target.style.backgroundColor = "#035a73ec"}
+        onMouseLeave={(e) => e.target.style.backgroundColor = "#027395ec"}
+      >
+        Go to Voting
+      </button>
     </div>
   );
 }
@@ -75,5 +83,17 @@ const styles = {
   timer: {
     fontSize: '24px',
     opacity: 0.7,
+  },
+  navButton: {
+    marginTop: '20px',
+    padding: '15px 40px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    backgroundColor: '#027395ec',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
   },
 };

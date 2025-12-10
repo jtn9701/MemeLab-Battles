@@ -65,6 +65,15 @@ export default function LobbyScreenKiosk({ lobbyName, players, setCurrentKiosk }
         <h2 style={styles.sectionTitle}>Join Game</h2>
         <canvas ref={qrCanvasRef} style={styles.qrCanvas}></canvas>
       </div>
+      
+      <button 
+        onClick={() => setCurrentKiosk(1)} 
+        style={styles.navButton}
+        onMouseEnter={(e) => e.target.style.backgroundColor = "#035a73ec"}
+        onMouseLeave={(e) => e.target.style.backgroundColor = "#027395ec"}
+      >
+        Start Game
+      </button>
     </div>
   );
 }
@@ -144,5 +153,21 @@ const styles = {
     borderRadius: "10px",
     backgroundColor: "#fff",
     padding: "10px",
+  },
+
+  navButton: {
+    position: "fixed",
+    bottom: "20px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    padding: "15px 40px",
+    fontSize: "18px",
+    fontWeight: "bold",
+    backgroundColor: "#027395ec",
+    color: "#fff",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
   }
 };
